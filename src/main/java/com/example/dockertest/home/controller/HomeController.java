@@ -10,6 +10,6 @@ public class HomeController {
     @RequestMapping("/")
     @ResponseBody
     public String showMain() {
-        return "이거 자동으로 가나??";
+        return "제발 바뀌어라 제발....";
     }
 }
