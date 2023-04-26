@@ -25,7 +25,7 @@ jobs:
         run: ./gradlew build
 
       - name: 도커 이미지 빌드 # (2)
-        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_IMAGE_NAME }}:1 .
+        run: docker build -t ${{ secrets.DOCKERHUB_IMAGE_NAME }} .
 
       - name: Docker Hub 로그인 # (3)
         uses: docker/login-action@v2
@@ -33,8 +33,11 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: tag 설정
+        run: docker tag ${{ secrets.DOCKERHUB_IMAGE_NAME }} ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_IMAGE_NAME }}
+
       - name: Docker Hub 퍼블리시 # (4)
-        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_IMAGE_NAME }}
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_IMAGE_NAME }}:1
 
       - name: WAS 인스턴스 접속 및 애플리케이션 실행 # (5)
         uses: appleboy/ssh-action@v0.1.6
