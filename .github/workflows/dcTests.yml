@@ -44,6 +44,7 @@ jobs:
     name: Deploy
     runs-on: [ self-hosted, label-go ]
     steps:
+      - name: deploy run
         run: |
           sh /home/ubuntu/dep/docker/run.sh
 #          host: ${{ secrets.WAS_HOST }}
