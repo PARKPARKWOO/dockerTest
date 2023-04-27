@@ -46,8 +46,7 @@ jobs:
         steps:
           - name: DockerRun
             run: |
-              docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q) 
-              docker run -d -p 8080:8080 --name=docTest --restart always ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_IMAGE_NAME }}
+              sh /home/ubuntu/dep/docker/run.sh
 #          host: ${{ secrets.WAS_HOST }}
 #          username: ${{ secrets.WAS_USERNAME }}
 #          password: ${{ secrets.WAS_PASSWORD }}
