@@ -49,11 +49,9 @@ jobs:
               username: ${{  github.repository_owner }}
               password: ${{ secrets.GH_TOKEN }}
           - name: DockerRun
-            script: |
-              docker stop $(docker ps -a -q) 
-              docker rm $(docker ps -a -q) 
-              docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_IMAGE_NAME }}
-              docker run -d --name=test -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_IMAGE_NAME }}
+            run: |
+              docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q) 
+              docker run -d -p 8080:8080 --name=docTest --restart always ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_IMAGE_NAME }}
 #          host: ${{ secrets.WAS_HOST }}
 #          username: ${{ secrets.WAS_USERNAME }}
 #          password: ${{ secrets.WAS_PASSWORD }}
