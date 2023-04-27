@@ -40,10 +40,10 @@ jobs:
         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_IMAGE_NAME }}
 
   deploy:
+    needs: build
+    name: Deploy
     runs-on: [ self-hosted, label-go ]
     steps:
-      - name: Deploy
-        needs: build
         run: |
           sh /home/ubuntu/dep/docker/run.sh
 #          host: ${{ secrets.WAS_HOST }}
